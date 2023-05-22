@@ -24,11 +24,11 @@ export class PlayersService {
         });
 
         if (!player) {
-            console.log("No players found");
+            //console.log("No players found");
             throw new NotFoundException("Player doesn't exist");
         }
 
-        console.log(player);
+        //console.log(player);
         return player;
     }
 
@@ -36,20 +36,20 @@ export class PlayersService {
         const player = await this.prisma.player.create({
             data: dto
         })
-
+        
         return player;
     }
 
     async deletePlayer(id: number) {
-        console.log("Deleting player");
+        //console.log("Deleting player");
         try {
             const player = await this.prisma.player.delete({
                 where: { id }
             });
-            console.log(`Record with ID ${id} has been deleted.`);
+            //console.log(`Record with ID ${id} has been deleted.`);
             return player;
         } catch (error) {
-            console.error(`Error deleting record with ID ${id}: ${error}`);
+            //console.error(`Error deleting record with ID ${id}: ${error}`);
         }
     }
 
@@ -59,10 +59,10 @@ export class PlayersService {
                 where: { id : playerId },
                 data : dto
             })
-            console.log(`Record with ID ${playerId} has been updated.`);
+            //console.log(`Record with ID ${playerId} has been updated.`);
             return editedPlayer;
         }catch(error){
-            console.error(`Error updating player`);
+            //console.error(`Error updating player`);
         }
     }
 }

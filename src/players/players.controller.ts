@@ -10,13 +10,13 @@ export class PlayersController {
     @Get()
     getPlayers(@Req() req) {
         const players = this.playersService.getPlayers();
-        console.log(players);
+        //console.log(players);
         return players;
     }
 
     @Get(':playerId')
     getPlayer(@Param('playerId', ParseIntPipe) playerdId: number) {
-        console.log(playerdId)
+        //console.log(playerdId)
         const player = this.playersService.getPlayer(playerdId);
         return player;
     }
