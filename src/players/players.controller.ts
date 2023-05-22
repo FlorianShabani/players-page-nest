@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, Req } from '@nestjs/common';
+import { Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { PlayersService } from './players.service';
 
 
@@ -14,9 +14,14 @@ export class PlayersController {
     }
 
     @Get(':playerId')
-    getPlayer(@Param('playerId') playerdId: number) {
+    getPlayer(@Param('playerId') playerdId: string) {
         console.log(playerdId)
-        const player = this.playersService.getPlayer(playerdId);
+        const player = this.playersService.getPlayer(parseInt(playerdId, 10));
         return player;
+    }
+
+    @Post()
+    addPlayer(@Req() req) {
+        
     }
 }

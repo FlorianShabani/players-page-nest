@@ -11,14 +11,17 @@ export class PlayersService {
     }
 
     async getPlayer(id: number) {
-        const player = await this.prisma.player.findMany({
+        const player = await this.prisma.player.findUnique({
             where: {
                 id: id,
             }
         });
 
-        if(!player) throw new NotFoundException("Player doesn't exist");
-
+        if(!player) {
+            console.log("No players found");
+            throw new NotFoundException("Player doesn't exist");
+        }
+        
         console.log(player);
         return player;
     }
