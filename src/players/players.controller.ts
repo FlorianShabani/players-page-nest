@@ -1,5 +1,6 @@
-import { Controller, Get, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Req } from '@nestjs/common';
 import { PlayersService } from './players.service';
+import { PlayerDto } from 'src/dto';
 
 
 @Controller('api/players')
@@ -14,14 +15,25 @@ export class PlayersController {
     }
 
     @Get(':playerId')
-    getPlayer(@Param('playerId') playerdId: string) {
+    getPlayer(@Param('playerId', ParseIntPipe) playerdId: number) {
         console.log(playerdId)
-        const player = this.playersService.getPlayer(parseInt(playerdId, 10));
+        const player = this.playersService.getPlayer(playerdId);
         return player;
     }
 
     @Post()
-    addPlayer(@Req() req) {
-        
+    @HttpCode(HttpStatus.OK)
+    addPlayer(@Body() dto : PlayerDto) {
+        return this.playersService.addPlayer(dto);
+    }
+
+    @Delete(':playerId')
+    deletePlayer(@Param('playerId', ParseIntPipe) playerdId: number) {
+        return this.playersService.deletePlayer(playerdId);
+    }
+
+    @Patch(':playerId')
+    editPlayer(@Param('playerId', ParseIntPipe) playerId: number, @Body() dto : PlayerDto) {
+        return this.playersService.editPlayer(playerId, dto);
     }
 }
