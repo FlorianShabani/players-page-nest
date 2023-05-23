@@ -1,14 +1,16 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { PlayerDto } from './dto';
+import { JwtGuard } from '../auth/guard/jwt.guard';
 import { PlayersService } from './players.service';
-import { PlayerDto } from 'src/dto';
 
 
+//@UseGuards(JwtGuard)
 @Controller('api/players')
 export class PlayersController {
-    constructor(private playersService: PlayersService) {}
+    constructor(private playersService: PlayersService) { }
 
     @Get()
-    getPlayers(@Req() req) {
+    getPlayers() {
         const players = this.playersService.getPlayers();
         //console.log(players);
         return players;
@@ -23,7 +25,7 @@ export class PlayersController {
 
     @Post()
     @HttpCode(HttpStatus.OK)
-    addPlayer(@Body() dto : PlayerDto) {
+    addPlayer(@Body() dto: PlayerDto) {
         return this.playersService.addPlayer(dto);
     }
 
@@ -33,7 +35,7 @@ export class PlayersController {
     }
 
     @Patch(':playerId')
-    editPlayer(@Param('playerId', ParseIntPipe) playerId: number, @Body() dto : PlayerDto) {
+    editPlayer(@Param('playerId', ParseIntPipe) playerId: number, @Body() dto: PlayerDto) {
         return this.playersService.editPlayer(playerId, dto);
     }
 }
