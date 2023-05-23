@@ -4,7 +4,7 @@ import { JwtGuard } from '../auth/guard/jwt.guard';
 import { PlayersService } from './players.service';
 
 
-//@UseGuards(JwtGuard)
+@UseGuards(JwtGuard)
 @Controller('api/players')
 export class PlayersController {
     constructor(private playersService: PlayersService) { }
